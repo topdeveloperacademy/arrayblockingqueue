@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.idelstak.arrayblockingqueue.screensaver;
+package prodeveloperacademy.arrayblockingqueue;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.logging.Level;
@@ -28,10 +28,12 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
- *
- * @author Hiram K. <https://github.com/IdelsTak>
+ * Pro Developer Academy - https://www.prodeveloperacademy.com
+ * Authors: Michael P. and Hiram K.
  */
 public class Screensaver extends Application {
+    private static final int WIDTH = 900;
+    private static final int HEIGHT = 600;
 
     private static final Logger LOG = Logger.getLogger(Screensaver.class.getName());
 
@@ -43,24 +45,22 @@ public class Screensaver extends Application {
 
         stage.setX(visualBounds.getMinX());
         stage.setY(visualBounds.getMinY());
-        
-        var width = visualBounds.getWidth();
-        var height = visualBounds.getHeight();
-        
-        stage.setWidth(width);
-        stage.setHeight(height);
-        stage.setMinWidth(width);
-        stage.setMinHeight(height);
-        stage.setMaxWidth(width);
-        stage.setMaxHeight(height);
-        
+
+
+        stage.setWidth(WIDTH);
+        stage.setHeight(HEIGHT);
+        stage.setMinWidth(WIDTH);
+        stage.setMinHeight(HEIGHT);
+        stage.setMaxWidth(WIDTH);
+        stage.setMaxHeight(HEIGHT);
+
         stage.setTitle("ArrayBlockingQueue Screensaver");
         stage.setScene(scene);
         stage.show();
-        
-        stage.setFullScreen(true);
 
-        var capacity = 200;
+        stage.setFullScreen(false);
+
+        var capacity = 10;
         var params = getParameters();
 
         if (!params.getRaw().isEmpty()) {
@@ -69,14 +69,14 @@ public class Screensaver extends Application {
             try {
                 capacity = Integer.parseInt(param);
             } catch (NumberFormatException exception) {
-                var msg = "\"{0}\" is not a valid number. Will default to: {1}";
+                var msg = "'{0}' is not a valid number. Will default to: {1}";
                 LOG.log(Level.WARNING, msg, new Object[]{param, capacity});
             }
         }
 
         var shapes = new ArrayBlockingQueue<Shape>(capacity);
 
-        var producer = new Producer(scene, shapes, capacity);
+        var producer = new Producer(WIDTH, HEIGHT, shapes);
         var consumer = new Consumer(root, shapes);
 
         Thread producingThread = new Thread(producer);

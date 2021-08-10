@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.idelstak.arrayblockingqueue.screensaver;
+package prodeveloperacademy.arrayblockingqueue;
 
 /**
- *
- * @author Hiram K. <https://github.com/IdelsTak>
+ * Pro Developer Academy - https://www.prodeveloperacademy.com
+ * Authors: Michael P. and Hiram K.
  */
 public class Launch {
 
@@ -28,5 +28,4 @@ public class Launch {
     public static void main(String[] args) {
         Screensaver.main(args);
     }
-    
 }

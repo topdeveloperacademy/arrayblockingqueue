@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.idelstak.arrayblockingqueue.screensaver;
+package prodeveloperacademy.arrayblockingqueue;
 
 import java.util.Queue;
 import javafx.application.Platform;
@@ -23,8 +23,8 @@ import javafx.scene.Group;
 import javafx.scene.shape.Shape;
 
 /**
- *
- * @author Hiram K. <https://github.com/IdelsTak>
+ * Pro Developer Academy - https://www.prodeveloperacademy.com
+ * Authors: Michael P. and Hiram K.
  */
 public class Consumer extends Task<Void> {
 
@@ -39,15 +39,18 @@ public class Consumer extends Task<Void> {
     @Override
     protected Void call() throws Exception {
         while (true) {
-            for (var i = 0; i < shapes.size(); i++) {
-                Platform.runLater(() -> {
-                    var shape = shapes.poll();
-                    if (shape != null) {
-                        root.getChildren().add(shape);
-                    }
-                });
-            }
+            // Blocks if the queue is empty
+            var shape = shapes.poll();
+
+            // Send to the UI thread
+            Platform.runLater(() -> {
+                if (shape != null) {
+                    root.getChildren().add(shape);
+                }
+            });
+
+            // Simulates a slow consumer
+            Thread.sleep(500);
         }
     }
-
 }
