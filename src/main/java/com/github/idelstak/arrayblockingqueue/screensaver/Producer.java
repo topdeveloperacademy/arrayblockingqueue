@@ -49,12 +49,12 @@ public class Producer extends Task<Void> {
                 var random = ThreadLocalRandom.current();
 
                 for (int i = 0; i < capacity; i++) {
-                    var xCoordinate = random.nextInt(Double.valueOf(scene.getWidth()).intValue()); 
+                    var xCoordinate = random.nextInt(Double.valueOf(scene.getWidth()).intValue());
                     var yCoordinate = random.nextInt(Double.valueOf(scene.getHeight()).intValue());
                     var width = random.nextInt(20);
                     var height = random.nextInt(50);
                     var shape = new Rectangle(xCoordinate, yCoordinate, width, height);
-                    
+
                     shape.setArcWidth(20);
                     shape.setArcHeight(random.nextInt(20));
 
