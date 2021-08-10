@@ -30,7 +30,6 @@ import java.util.logging.Logger;
 
 /**
  * Pro Developer Academy - https://www.prodeveloperacademy.com
- * Authors: Michael P. and Hiram K.
  */
 public class Screensaver extends Application {
     private static final int WIDTH = 900;
@@ -60,6 +59,7 @@ public class Screensaver extends Application {
         stage.setMinHeight(HEIGHT);
         stage.setMaxWidth(WIDTH);
         stage.setMaxHeight(HEIGHT);
+        stage.setResizable(false);
 
         stage.setTitle("ArrayBlockingQueue Screensaver");
         stage.setScene(scene);

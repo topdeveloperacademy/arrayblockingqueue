@@ -26,7 +26,6 @@ package prodeveloperacademy.arrayblockingqueue;
 
 /**
  * Pro Developer Academy - https://www.prodeveloperacademy.com
- * Authors: Michael P. and Hiram K.
  */
 public class Launch {
 

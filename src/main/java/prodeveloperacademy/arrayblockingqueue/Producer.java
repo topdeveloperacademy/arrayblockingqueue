@@ -26,7 +26,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Pro Developer Academy - https://www.prodeveloperacademy.com
- * Authors: Michael P. and Hiram K.
  */
 public class Producer extends Task<Void> {
     private static final int MAX_SHAPE_WIDTH = 20;
@@ -60,14 +59,15 @@ public class Producer extends Task<Void> {
         var height = random.nextInt(MAX_SHAPE_HEIGHT);
         var shape = new Rectangle(xCoordinate, yCoordinate, width, height);
 
-        shape.setArcWidth(20);
-        shape.setArcHeight(random.nextInt(20));
+        shape.setArcWidth(MAX_SHAPE_WIDTH);
+        shape.setArcHeight(random.nextInt(MAX_SHAPE_WIDTH));
 
         var hue = random.nextDouble() * 360.0;
         var saturation = random.nextDouble();
         var brightness = random.nextDouble();
         var opacity = random.nextDouble();
         shape.setFill(Color.hsb(hue, saturation, brightness, opacity));
+
         return shape;
     }
 }

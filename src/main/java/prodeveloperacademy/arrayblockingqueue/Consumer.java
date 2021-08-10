@@ -25,7 +25,6 @@ import java.util.Queue;
 
 /**
  * Pro Developer Academy - https://www.prodeveloperacademy.com
- * Authors: Michael P. and Hiram K.
  */
 public class Consumer extends Task<Void> {
     private final Group root;
