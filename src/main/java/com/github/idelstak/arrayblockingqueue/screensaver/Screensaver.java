@@ -34,56 +34,59 @@ import javafx.stage.Stage;
 public class Screensaver extends Application {
 
     private static final Logger LOG = Logger.getLogger(Screensaver.class.getName());
-    private boolean running;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
         var root = new Group();
         var scene = new Scene(root, Color.WHITE);
-        var bounds = Screen.getPrimary().getVisualBounds();
+        var visualBounds = Screen.getPrimary().getVisualBounds();
 
-        scene.widthProperty().addListener((observable, oldWidth, newWidth) -> {
+        stage.setX(visualBounds.getMinX());
+        stage.setY(visualBounds.getMinY());
+        
+        var width = visualBounds.getWidth();
+        var height = visualBounds.getHeight();
+        
+        stage.setWidth(width);
+        stage.setHeight(height);
+        stage.setMinWidth(width);
+        stage.setMinHeight(height);
+        stage.setMaxWidth(width);
+        stage.setMaxHeight(height);
+        
+        stage.setTitle("ArrayBlockingQueue Screensaver");
+        stage.setScene(scene);
+        stage.show();
+        
+        stage.setFullScreen(true);
 
-            if (newWidth.doubleValue() == bounds.getWidth()) {
-                if (!running) {
-                    LOG.log(Level.INFO, "Scene size changed. Threads will initialize.");
-                    var capacity = 200;
-                    var params = getParameters();
+        var capacity = 200;
+        var params = getParameters();
 
-                    if (!params.getRaw().isEmpty()) {
-                        var param = params.getRaw().get(0);
+        if (!params.getRaw().isEmpty()) {
+            var param = params.getRaw().get(0);
 
-                        try {
-                            capacity = Integer.parseInt(param);
-                        } catch (NumberFormatException exception) {
-                            var msg = "\"{0}\" is not a valid number. Will default to: {1}";
-                            LOG.log(Level.WARNING, msg, new Object[]{param, capacity});
-                        }
-                    }
-
-                    var shapes = new ArrayBlockingQueue<Shape>(capacity);
-
-                    var producer = new Producer(scene, shapes, capacity);
-                    var consumer = new Consumer(root, shapes);
-
-                    Thread producingThread = new Thread(producer);
-                    Thread consumingThread = new Thread(consumer);
-
-                    producingThread.setDaemon(true);
-                    consumingThread.setDaemon(true);
-
-                    producingThread.start();
-                    consumingThread.start();
-                    
-                    running = true;
-                }
+            try {
+                capacity = Integer.parseInt(param);
+            } catch (NumberFormatException exception) {
+                var msg = "\"{0}\" is not a valid number. Will default to: {1}";
+                LOG.log(Level.WARNING, msg, new Object[]{param, capacity});
             }
-        });
+        }
 
-        primaryStage.setTitle("ArrayBlockingQueue Screensaver");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        primaryStage.setFullScreen(true);
+        var shapes = new ArrayBlockingQueue<Shape>(capacity);
+
+        var producer = new Producer(scene, shapes, capacity);
+        var consumer = new Consumer(root, shapes);
+
+        Thread producingThread = new Thread(producer);
+        Thread consumingThread = new Thread(consumer);
+
+        producingThread.setDaemon(true);
+        consumingThread.setDaemon(true);
+
+        producingThread.start();
+        consumingThread.start();
     }
 
     /**
