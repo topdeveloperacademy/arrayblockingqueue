@@ -55,10 +55,7 @@ public class Screensaver extends Application {
 
         stage.setWidth(WIDTH);
         stage.setHeight(HEIGHT);
-        stage.setMinWidth(WIDTH);
-        stage.setMinHeight(HEIGHT);
-        stage.setMaxWidth(WIDTH);
-        stage.setMaxHeight(HEIGHT);
+
         stage.setResizable(false);
 
         stage.setTitle("ArrayBlockingQueue Screensaver");
