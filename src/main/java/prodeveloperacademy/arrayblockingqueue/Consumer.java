@@ -22,15 +22,16 @@ import javafx.scene.Group;
 import javafx.scene.shape.Shape;
 
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * Pro Developer Academy - https://www.prodeveloperacademy.com
  */
 public class Consumer extends Task<Void> {
     private final Group root;
-    private final Queue<Shape> shapesQueue;
+    private final BlockingQueue<Shape> shapesQueue;
 
-    public Consumer(Group root, Queue<Shape> shapeQueue) {
+    public Consumer(Group root, BlockingQueue<Shape> shapeQueue) {
         this.root = root;
         this.shapesQueue = shapeQueue;
     }
@@ -39,7 +40,7 @@ public class Consumer extends Task<Void> {
     protected Void call() throws Exception {
         while (true) {
             // Blocks if the queue is empty
-            var shape = shapesQueue.poll();
+            var shape = shapesQueue.take();
 
             // Send to the UI thread
             Platform.runLater(() -> {

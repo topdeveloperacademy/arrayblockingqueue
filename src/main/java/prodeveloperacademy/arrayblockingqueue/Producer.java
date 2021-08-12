@@ -22,6 +22,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -32,21 +33,21 @@ public class Producer extends Task<Void> {
     private static final int MAX_SHAPE_HEIGHT = 50;
     private final int width;
     private final int height;
-    private final Queue<Shape> shapesQueue;
+    private final BlockingQueue<Shape> shapesQueue;
 
-    public Producer(int width, int height, Queue<Shape> shapesQueue) {
+    public Producer(int width, int height, BlockingQueue<Shape> shapesQueue) {
         this.width = width;
         this.height = height;
         this.shapesQueue = shapesQueue;
     }
 
     @Override
-    protected Void call() {
+    protected Void call() throws InterruptedException {
         // Create rectangles endlessly
         while (true) {
             var shape = createNewShape();
             // Blocks if capacities reached
-            shapesQueue.offer(shape);
+            shapesQueue.put(shape);
         }
     }
 
